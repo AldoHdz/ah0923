@@ -1,5 +1,5 @@
-import tools.JsonToolRepository;
-import tools.Tool;
+import toolObjects.JsonToolRepository;
+import toolObjects.Tool;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -11,7 +11,7 @@ import java.text.ParseException;
  */
 public class PointOfSale {
     private TimeUtil timeUtil;
-    JsonToolRepository jsonToolRepository;
+    private JsonToolRepository jsonToolRepository;
     public PointOfSale() {
         try{
             this.timeUtil = new TimeUtil();
@@ -34,16 +34,16 @@ public class PointOfSale {
         }if(discountPercent<0 || discountPercent>100){
             throw new IllegalArgumentException("Discount percentage must be within the range of 1-100.");
         }
-
         Tool tool = jsonToolRepository.getTool(toolCode);
-        if(tool.isEmpty()){
+        if(tool.isEmpty()){ //[IfICould] - I might consider just throwing an empty rental agreement object from an API perspective. Thought it would be better to demo some error handling.
             throw new IllegalArgumentException("Invalid tool code. Verify ALL CAPS and has valid entry in repo. Tool code: " + toolCode);
         }
+
         String formattedCheckoutDate = "";
         String dueDate = "";
         Integer chargeDays = 0;
         try{
-            formattedCheckoutDate = timeUtil.formatDate(checkoutDate); //[IfICould] - If I couldn't get time as a ISO date string or time stamp on the API side i'd enforce a contract that rejects dates not in workable formats.
+            formattedCheckoutDate = timeUtil.formatDate(checkoutDate); //[IfICould] - If I couldn't get time as a ISO date string or time stamp on the API side i'd enforce a contract that rejects dates not in accepted formats.
             dueDate = timeUtil.calculateDueDate(formattedCheckoutDate, rentalDayCount);
             chargeDays = timeUtil.calculateChargeDays(formattedCheckoutDate, dueDate, tool);
         }catch (ParseException e){ //Error out completely as we cannot fulfill the contract anymore.
