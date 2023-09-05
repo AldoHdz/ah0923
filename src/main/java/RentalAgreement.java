@@ -1,4 +1,3 @@
-import tools.Tool;
 
 public class RentalAgreement {
     private String toolCode;
@@ -77,7 +76,34 @@ public class RentalAgreement {
         return finalCharge;
     }
 
-    public static class RentalAgreementBuilder{ //[IfICould] - While useful build patterns add a lot of boilerplate. Project Lombok does this implicitly with builder but requires too much setup for a demo.
+    @Override
+    public String toString(){
+        return "Tool code: " + toolCode +
+                '\n' +
+                "Tool type: " + toolType +
+                '\n' +
+                "Tool Brand: " + toolBrand +
+                '\n' +
+                "Rental Days: " + rentalDays +
+                '\n' +
+                "Check out date: " + checkOutDate +
+                '\n' +
+                "Due date: " + dueDate +
+                '\n' +
+                "Daily rental charge: " + dailyRentalCharge +
+                '\n' +
+                "Charge days: " + chargeDays +
+                '\n' +
+                "Pre-discount charge: " + preDiscountCharge +
+                '\n' +
+                "Discount percent: " + discountPercent +
+                '\n' +
+                "Discount amount: " + discountAmount +
+                '\n' +
+                "Final charge: " + finalCharge;
+    }
+
+    public static class RentalAgreementBuilder{ //[IfICould] - While useful, build patterns add a lot of boilerplate. Project Lombok does this implicitly with @builder but requires too much setup for a demo.
         private String toolCode;
         private String toolType;
         private String toolBrand;
