@@ -1,4 +1,4 @@
-package tools.dao;
+package toolObjects.dao;
 
 /**
  * Loads tool data into memory. Requires the ToolData.json file and PriceData.json to properly init.
