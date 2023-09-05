@@ -1,4 +1,4 @@
-package tools.dao;
+package toolObjects.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,11 +9,11 @@ public class ToolPrice {
     private String toolType;
     private BigDecimal dailyCharge;
     @JsonProperty("weekdayCharge")
-    private Boolean hasWeekdayCharge;
+    private Boolean weekdayCharge;
     @JsonProperty("weekendCharge")
-    private Boolean hasWeekendCharge;
+    private Boolean weekendCharge;
     @JsonProperty("holidayCharge")
-    private Boolean hasHolidayCharge;
+    private Boolean holidayCharge;
 
     public String getToolType() {
         return toolType;
@@ -24,22 +24,15 @@ public class ToolPrice {
     }
 
     public Boolean hasWeekdayCharge() {
-        return hasWeekdayCharge;
-    }
-
-    public void setHasWeekdayCharge(Boolean hasWeekdayCharge) {
-        this.hasWeekdayCharge = hasWeekdayCharge;
+        return weekdayCharge;
     }
 
     public Boolean hasWeekendCharge() {
-        return hasWeekendCharge;
+        return weekendCharge;
     }
 
     public Boolean hasHolidayCharge() {
-        return hasHolidayCharge;
+        return holidayCharge;
     }
 
-    public void setHasHolidayCharge(Boolean hasHolidayCharge) {
-        this.hasHolidayCharge = hasHolidayCharge;
-    }
 }

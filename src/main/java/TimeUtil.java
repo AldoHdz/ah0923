@@ -1,4 +1,4 @@
-import tools.Tool;
+import toolObjects.Tool;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TimeUtil {
 
@@ -20,11 +22,11 @@ public class TimeUtil {
     public Integer calculateChargeDays(String checkoutDate, String dueDate, Tool tool) throws ParseException {
         List<String> daysCheckedOut = getDateRange(checkoutDate, dueDate);
         Integer countOfChargableDays = daysCheckedOut.size()-1;
-        for(int i = 1; i<daysCheckedOut.size(); i++){ //Start at one because charge days start day after checkout up to and including due date.
+        for(int i = 1; i<daysCheckedOut.size(); i++){ //Start at 1 because the list contains every date from start to end inclusive. We start charging day after first day.
             String day = daysCheckedOut.get(i);
             if(isDateAWeekend(day) && !tool.hasWeekendCharge()){
                 countOfChargableDays--;
-            }if(isAHoliday(day) && !tool.hasHolidayCharge()){
+            }if(isDateAHoliday(day) && !tool.hasHolidayCharge()){
                 countOfChargableDays--;
             }if(!isDateAWeekend(day) && !tool.hasWeekdayCharge()){
                 countOfChargableDays--;
@@ -34,17 +36,18 @@ public class TimeUtil {
     }
 
     public String formatDate(String inputDate) throws ParseException {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("M/dd/yy");
-        // Parse the input date string
-        Date date = inputFormat.parse(inputDate);
-        // Create a SimpleDateFormat for the desired output format with leading zero
-        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yy");
-        return outputFormat.format(date);
-    }
-
-
-    private boolean isAHoliday(String date){
-        return isIndependenceDay(date) || isLaborDay(date);
+        String regex = "^(0?[1-9]|1[0-2])/\\d{1,2}/\\d{2}$"; //If date comes in as M/DD/YY then change it to MM/dd/yy format.
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(inputDate);
+        if (matcher.matches()) {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("M/dd/yy");
+            // Parse the input date string
+            Date date = inputFormat.parse(inputDate);
+            // Create a SimpleDateFormat for the desired output format with leading zero
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yy");
+            return outputFormat.format(date);
+        }
+        return inputDate;
     }
 
     public List<String> getDateRange(String startDate, String endDate) throws ParseException {
@@ -52,29 +55,12 @@ public class TimeUtil {
         Date parsedStartDate = sdf.parse(startDate);
         Date parsedEndDate = sdf.parse(endDate);
         List<String> dateRange = new ArrayList<>();
-        long ONE_DAY = 86400000;
 
-        long diffInMillies = Math.abs(parsedEndDate.getTime() - parsedStartDate.getTime()); //Because charge dates happen day after rental. So if we rent on 2/2/2022 we don't start charging until 2/3/2022.
+        long diffInMillies = Math.abs(parsedEndDate.getTime() - parsedStartDate.getTime());
         long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
         Date currentDate = parsedStartDate;
         for (int i = 0; i<=diffInDays; i++) {
-            dateRange.add(sdf.format(currentDate));
-            currentDate = new Date(currentDate.getTime() + TimeUnit.DAYS.toMillis(1));
-        }
-
-        return dateRange;
-    }
-
-    private List<String> calculateDaysBetweenRanges(Date startDate, Date endDate){
-        List<String> dateRange = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
-
-        long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
-        long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-        Date currentDate = startDate;
-        for (int i = 0; i<diffInDays; i++) { //We start at 1 because the range we care about is startDate through endDate. Inclusive on the EndDate side.
             dateRange.add(sdf.format(currentDate));
             currentDate = new Date(currentDate.getTime() + TimeUnit.DAYS.toMillis(1));
         }
@@ -87,6 +73,10 @@ public class TimeUtil {
         ZonedDateTime futureDate = zonedDateTime.plusDays(rentalDateCount);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
         return futureDate.format(formatter);
+    }
+
+    private boolean isDateAHoliday(String date){
+        return isIndependenceDay(date) || isLaborDay(date);
     }
 
     private boolean isIndependenceDay(String date){
