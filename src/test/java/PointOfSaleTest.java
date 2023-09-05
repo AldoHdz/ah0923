@@ -28,7 +28,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Should create a correct rental agreement on a rental three day rental period including the Independence Day observance. - Test 2")
-    void pointOfSaleCreatesCorrectRentalAgreementOnThreeDayAgreementWithFourthOfJuly() throws ParseException {
+    void pointOfSaleCreatesCorrectRentalAgreementOnThreeDayAgreementWithFourthOfJuly(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("LADW","7/2/20", 3, 10 );
         Assertions.assertEquals("LADW", rentalAgreement.getToolCode());
         Assertions.assertEquals("Ladder", rentalAgreement.getToolType());
@@ -45,7 +45,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Should create a correct rental agreement on a five day rental period which includes Independence Day observance. - Test 3")
-    void pointOfSaleCreatesCorrectRentalAgreementOnFiveDayAgreementWithFourthOfJuly() throws ParseException {
+    void pointOfSaleCreatesCorrectRentalAgreementOnFiveDayAgreementWithFourthOfJuly(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("CHNS","7/2/15", 5, 25 );
         Assertions.assertEquals("CHNS", rentalAgreement.getToolCode());
         Assertions.assertEquals("Chainsaw", rentalAgreement.getToolType());
@@ -62,7 +62,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Should create a correct rental agreement on a six day rental period which includes Labor Day observance. - Test 4")
-    void pointOfSaleCreatesCorrectRentalAgreementOnFiveDayAgreementWithLaborDay() throws ParseException {
+    void pointOfSaleCreatesCorrectRentalAgreementOnFiveDayAgreementWithLaborDay(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("JAKD","9/3/15", 6, 0 );
         Assertions.assertEquals("JAKD", rentalAgreement.getToolCode());
         Assertions.assertEquals("Jackhammer", rentalAgreement.getToolType());
@@ -79,7 +79,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Should create a correct rental agreement on a nine day rental period which includes Independence Day observance. - Test 5")
-    void pointOfSaleCreatesCorrectRentalAgreementOnNineDayAgreementWithLaborDay() throws ParseException {
+    void pointOfSaleCreatesCorrectRentalAgreementOnNineDayAgreementWithLaborDay(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("JAKR","7/2/15", 9, 0 );
         Assertions.assertEquals("JAKR", rentalAgreement.getToolCode());
         Assertions.assertEquals("Jackhammer", rentalAgreement.getToolType());
@@ -96,7 +96,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Should create a correct rental agreement on a four day rental period which includes Independence Day observance. - Test 6")
-    void pointOfSaleCreatesCorrectRentalAgreementOnFourDayAgreementWithLaborDay() throws ParseException {
+    void pointOfSaleCreatesCorrectRentalAgreementOnFourDayAgreementWithLaborDay(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("JAKR","7/2/20", 4, 50 );
         Assertions.assertEquals("JAKR", rentalAgreement.getToolCode());
         Assertions.assertEquals("Jackhammer", rentalAgreement.getToolType());
@@ -113,7 +113,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Charges nothing on a rental period that's nothing but weekend and holiday on a tool that does not charge on either day.")
-    void pointOfSaleCreatesValidContractOnRentalPeriodThatIsNothingButWeekendAndHolidayOnToolThatDoesNotChargeForThoseDays() throws ParseException {
+    void pointOfSaleCreatesValidContractOnRentalPeriodThatIsNothingButWeekendAndHolidayOnToolThatDoesNotChargeForThoseDays(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("JAKR","7/2/20", 3, 0 );
         Assertions.assertEquals("JAKR", rentalAgreement.getToolCode());
         Assertions.assertEquals("Jackhammer", rentalAgreement.getToolType());
@@ -131,7 +131,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("PointOfSale should throw invalid argument exception on invalid rental day counts")
-    void pointOfSaleThrowsCorrectErrorOnBadRentalDayCount() throws ParseException {
+    void pointOfSaleThrowsCorrectErrorOnBadRentalDayCount(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pointOfSale.checkout("JAKR", "7/2/20", -1, 10);
         });
@@ -142,7 +142,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("PointOfSale should throw invalid argument exception on invalid tool code")
-    void pointOfSaleThrowsErrorOnInvalidToolCode() throws ParseException {
+    void pointOfSaleThrowsErrorOnInvalidToolCode() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pointOfSale.checkout("NBA", "7/2/20", 100, 10);
         });
@@ -153,7 +153,7 @@ class PointOfSaleTest {
 
     @Test
     @DisplayName("Point of sale creates valid rental agreement for item that doesn't charge on weekdays")
-    void pointOfSaleCreatesValidRentalAgreementForItemThatDoesNotChargeOnWeekdays() throws ParseException {
+    void pointOfSaleCreatesValidRentalAgreementForItemThatDoesNotChargeOnWeekdays(){
         RentalAgreement rentalAgreement = pointOfSale.checkout("NAIL","7/2/20", 40, 0 );
         Assertions.assertEquals("NAIL", rentalAgreement.getToolCode());
         Assertions.assertEquals("Nail Gun", rentalAgreement.getToolType());
