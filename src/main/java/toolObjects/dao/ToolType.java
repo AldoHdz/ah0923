@@ -1,7 +1,7 @@
 package toolObjects.dao;
 
 /**
- * Loads tool data into memory. Requires the ToolData.json file and PriceData.json to properly init.
+ * DAO that data from ToolData.json maps to.
  */
 public class ToolType {
     private String toolCode;
