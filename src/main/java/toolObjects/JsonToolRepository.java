@@ -31,7 +31,7 @@ public class JsonToolRepository implements ToolRepository {
         buildToolTypeMap();
         buildToolPriceMap();
 
-        for(String toolCode : toolTypeMap.keySet()){
+        for (String toolCode : toolTypeMap.keySet()) {
             ToolType toolType = toolTypeMap.get(toolCode);
             ToolPrice toolPrice = toolPriceMap.get(toolType.getToolType());
             toolMap.put(toolCode, new Tool.ToolBuilder().setToolCode(toolCode)
@@ -47,14 +47,14 @@ public class JsonToolRepository implements ToolRepository {
 
     private void buildToolTypeMap() throws IOException {
         buildToolTypeList();
-        for(ToolType toolType : toolTypeList){
+        for (ToolType toolType : toolTypeList) {
             toolTypeMap.put(toolType.getToolCode(), toolType);
         }
     }
 
     private void buildToolPriceMap() throws IOException {
         buildToolPriceList();
-        for(ToolPrice toolPrice : toolPriceList){
+        for (ToolPrice toolPrice : toolPriceList) {
             toolPriceMap.put(toolPrice.getToolType(), toolPrice);
         }
     }
@@ -73,7 +73,7 @@ public class JsonToolRepository implements ToolRepository {
 
     @Override
     public Tool getTool(String toolCode) {
-        return  toolMap.getOrDefault(toolCode, new Tool.ToolBuilder().build()); //Saves us from error checking. If we don't have the tool we return an empty object.
+        return toolMap.getOrDefault(toolCode, new Tool.ToolBuilder().build()); //Saves us from error checking. If we don't have the tool we return an empty object.
 
     }
 }

@@ -55,11 +55,11 @@ public class Tool {
         return hasHolidayCharge;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return StringUtils.isEmpty(toolCode);
     }
 
-    public static class ToolBuilder{//[IfICould] - Duplicate of commentary under RentalAgreement.class builder.
+    public static class ToolBuilder {//[IfICould] - Duplicate of commentary under RentalAgreement.class builder.
         private String toolCode;
         private String toolType;
         private String brand;
@@ -103,7 +103,7 @@ public class Tool {
             return this;
         }
 
-        public Tool build(){
+        public Tool build() {
             return new Tool(this);
         }
     }

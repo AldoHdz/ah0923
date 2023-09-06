@@ -12,41 +12,43 @@ import java.text.ParseException;
 public class PointOfSale {
     private TimeUtil timeUtil;
     private JsonToolRepository jsonToolRepository;
+
     public PointOfSale() {
-        try{
+        try {
             this.timeUtil = new TimeUtil();
             this.jsonToolRepository = new JsonToolRepository();
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * @param toolCode - String indicating a unique ID for every tool.
-     * @param checkoutDate - A string representing a checkout date. Will be formatted internally to a java date time object.
-     * @param rentalDayCount - Simple int number of days a potential rental will last.
+     * @param toolCode        - String indicating a unique ID for every tool.
+     * @param checkoutDate    - A string representing a checkout date. Will be formatted internally to a java date time object.
+     * @param rentalDayCount  - Simple int number of days a potential rental will last.
      * @param discountPercent - int number that represents a percentage discount represented as a whole number. IE 5 = 5%.
      * @return RentalAgreement - Represents an object that has all the data pertaining to a rental agreement.
      */
     public RentalAgreement checkout(String toolCode, String checkoutDate, int rentalDayCount, int discountPercent) {
-        if(rentalDayCount<1){
+        if (rentalDayCount < 1) {
             throw new IllegalArgumentException("Number of days for the rental must be at least 1.");
-        }if(discountPercent<0 || discountPercent>100){
+        }
+        if (discountPercent < 0 || discountPercent > 100) {
             throw new IllegalArgumentException("Discount percentage must be within the range of 1-100.");
         }
         Tool tool = jsonToolRepository.getTool(toolCode);
-        if(tool.isEmpty()){ //[IfICould] - I might consider just throwing an empty rental agreement object from an API perspective. Thought it would be better to demo some error handling.
+        if (tool.isEmpty()) { //[IfICould] - I might consider just throwing an empty rental agreement object from an API perspective. Thought it would be better to demo some error handling.
             throw new IllegalArgumentException("Invalid tool code. Verify ALL CAPS and has valid entry in repo. Tool code: " + toolCode);
         }
 
         String formattedCheckoutDate = "";
         String dueDate = "";
         Integer chargeDays = 0;
-        try{
+        try {
             formattedCheckoutDate = timeUtil.formatDate(checkoutDate); //[IfICould] - If I couldn't get time as a ISO date string or time stamp on the API side i'd enforce a contract that rejects dates not in accepted formats.
             dueDate = timeUtil.calculateDueDate(formattedCheckoutDate, rentalDayCount);
             chargeDays = timeUtil.calculateChargeDays(formattedCheckoutDate, dueDate, tool);
-        }catch (ParseException e){ //Error out completely as we cannot fulfill the contract anymore.
+        } catch (ParseException e) { //Error out completely as we cannot fulfill the contract anymore.
             throw new RuntimeException(e);
         }
         BigDecimal preDiscountCharge = calculatePreDiscountCharge(chargeDays, tool.getDailyCharge());
@@ -64,23 +66,24 @@ public class PointOfSale {
                 .setDailyRentalCharge(String.valueOf(tool.getDailyCharge()))
                 .setChargeDays(String.valueOf(chargeDays))
                 .setPreDiscountCharge(String.valueOf(preDiscountCharge))
-                .setDiscountPercent(discountPercent+"%")
+                .setDiscountPercent(discountPercent + "%")
                 .setDiscountAmount(String.valueOf(discountAmount))
                 .setFinalCharge(String.valueOf(finalCharge))
                 .build();
         return result;
     }
 
-    private BigDecimal calculateFinalCharge(BigDecimal preDiscountAmount, BigDecimal discountAmount){
+    private BigDecimal calculateFinalCharge(BigDecimal preDiscountAmount, BigDecimal discountAmount) {
         return preDiscountAmount.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
     }
-    private BigDecimal calculatePreDiscountCharge(int numberOfDays, BigDecimal dailyCharge){
+
+    private BigDecimal calculatePreDiscountCharge(int numberOfDays, BigDecimal dailyCharge) {
         BigDecimal total = BigDecimal.valueOf(numberOfDays).multiply(dailyCharge);
         total = total.setScale(2, RoundingMode.HALF_UP);
         return total;
     }
 
-    private BigDecimal calculateDiscountAmount(BigDecimal charge, int percentOff){
+    private BigDecimal calculateDiscountAmount(BigDecimal charge, int percentOff) {
         BigDecimal discountPercent = BigDecimal.valueOf(percentOff).divide(BigDecimal.valueOf(100));
         BigDecimal discountAmount = charge.multiply(discountPercent);
         discountAmount = discountAmount.setScale(2, RoundingMode.HALF_UP);

@@ -80,7 +80,7 @@ public class RentalAgreement {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Tool code: " + toolCode +
                 '\n' +
                 "Tool type: " + toolType +
@@ -109,7 +109,7 @@ public class RentalAgreement {
     /**
      * Builder pattern implemented to facilitate building an otherwise complex object more reliably.
      */
-    public static class RentalAgreementBuilder{ //[IfICould] - While useful, build patterns add a lot of boilerplate. Project Lombok does this implicitly with @builder but requires too much setup for a demo.
+    public static class RentalAgreementBuilder { //[IfICould] - While useful, build patterns add a lot of boilerplate. Project Lombok does this implicitly with @builder but requires too much setup for a demo.
         private String toolCode;
         private String toolType;
         private String toolBrand;
@@ -182,7 +182,8 @@ public class RentalAgreement {
             this.finalCharge = finalCharge;
             return this;
         }
-        public RentalAgreement build(){
+
+        public RentalAgreement build() {
             return new RentalAgreement(this);
         }
     }
