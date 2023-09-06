@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df171654-9fab-4182-8fd9-8ce37ebcdff5" name="Changes" comment="Added javadocs to all public classes and functions.">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="df171654-9fab-4182-8fd9-8ce37ebcdff5" name="Changes" comment="Ran code through IntelliJ's code cleanup functionality to get everything looking consistent with no weird spaces.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +45,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AldoHdz"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="33c0afa3-da20-4ae0-8bb4-048390c057f3" />
+        <option name="url" value="https://github.com/AldoHdz/ah0923" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -66,6 +82,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.4229885",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "vcs.Git"
   }
 }]]></component>
@@ -293,7 +310,23 @@
       <option name="project" value="LOCAL" />
       <updated>1693975072086</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added javadocs to all public classes and functions.">
+      <option name="closed" value="true" />
+      <created>1693975127374</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1693975127374</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Ran code through IntelliJ's code cleanup functionality to get everything looking consistent with no weird spaces.">
+      <option name="closed" value="true" />
+      <created>1693975379928</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1693975379928</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -320,7 +353,8 @@
     <MESSAGE value="More import cleanups." />
     <MESSAGE value="Removed buggy regex code used in formateDate function to try and catch improperly formed user dates. &#10;Added javadoc information on all public functions." />
     <MESSAGE value="Added javadocs to all public classes and functions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added javadocs to all public classes and functions." />
+    <MESSAGE value="Ran code through IntelliJ's code cleanup functionality to get everything looking consistent with no weird spaces." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ran code through IntelliJ's code cleanup functionality to get everything looking consistent with no weird spaces." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
