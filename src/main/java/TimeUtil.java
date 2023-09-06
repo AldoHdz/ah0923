@@ -13,12 +13,15 @@ import java.util.regex.Pattern;
 
 public class TimeUtil {
 
-    public boolean isDateAWeekend(String date){
-        ZonedDateTime zonedDateTime = convertDateStringToObject(date);
-        DayOfWeek dayOfWeek = zonedDateTime.getDayOfWeek();
-        return dayOfWeek == DayOfWeek.SATURDAY ||  dayOfWeek == DayOfWeek.SUNDAY;
-    }
-
+    /**
+     *
+     * @param checkoutDate - String date formatted as MM/dd/yy. It's the start date provided by the user.
+     * @param dueDate - String date formatted as MM/dd/yy. Calculated as checkoutDate + checkout days
+     * @param tool - Tool object containing relevant tool data. Tool type, daily charge rate, if holiday or weeked charges exist etc.
+     * @return - Final result calculates how many days are charged. Date is potentially every day after checkoutDate and up to dueDate minus
+     * holidays and weekends if the tool doesn't charge on those days.
+     * @throws ParseException - Thrown by internal function call getDateRange. Because it parses a string date and creates a list of all the dates between startDate and dueDate.
+     */
     public Integer calculateChargeDays(String checkoutDate, String dueDate, Tool tool) throws ParseException {
         List<String> daysCheckedOut = getDateRange(checkoutDate, dueDate);
         Integer countOfChargableDays = daysCheckedOut.size()-1;
@@ -35,21 +38,27 @@ public class TimeUtil {
         return countOfChargableDays;
     }
 
+    /**
+     *
+     * @param inputDate - raw date provided by user. Could be in MM/dd/yy format or M/d/yy format. We try to sanitize and convert to MM/dd/yy.
+     * @return - Returns a date in MM/dd/yy format.
+     * @throws ParseException   - Due to having to parse the inputDate string.
+     */
     public String formatDate(String inputDate) throws ParseException {
-        String regex = "^(0?[1-9]|1[0-2])/\\d{1,2}/\\d{2}$"; //If date comes in as M/DD/YY then change it to MM/dd/yy format.
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(inputDate);
-        if (matcher.matches()) {
             SimpleDateFormat inputFormat = new SimpleDateFormat("M/dd/yy");
             // Parse the input date string
             Date date = inputFormat.parse(inputDate);
             // Create a SimpleDateFormat for the desired output format with leading zero
             SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yy");
             return outputFormat.format(date);
-        }
-        return inputDate;
     }
 
+    /**
+     * @param startDate - user specified start date for rental
+     * @param endDate - Calculated end date. Is startDate + number of rental days.
+     * @return - List<String> that contains every date between those two dates.
+     * @throws ParseException - Because we must parse string dates with SimpleDateFormat
+     */
     public List<String> getDateRange(String startDate, String endDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         Date parsedStartDate = sdf.parse(startDate);
@@ -68,6 +77,12 @@ public class TimeUtil {
         return dateRange;
     }
 
+    /**
+     *
+     * @param date - user supplied rental date start
+     * @param rentalDateCount - number of days the user wants the tool
+     * @return - Calculates the number of days that is. Is considered date+rentalDateCount
+     */
     public String calculateDueDate(String date, int rentalDateCount){
         ZonedDateTime zonedDateTime = convertDateStringToObject(date);
         ZonedDateTime futureDate = zonedDateTime.plusDays(rentalDateCount);
@@ -79,6 +94,11 @@ public class TimeUtil {
         return isIndependenceDay(date) || isLaborDay(date);
     }
 
+    private boolean isDateAWeekend(String date){
+        ZonedDateTime zonedDateTime = convertDateStringToObject(date);
+        DayOfWeek dayOfWeek = zonedDateTime.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SATURDAY ||  dayOfWeek == DayOfWeek.SUNDAY;
+    }
     private boolean isIndependenceDay(String date){
         ZonedDateTime zonedDateTime = convertDateStringToObject(date);
         int year = zonedDateTime.getYear();
