@@ -1,4 +1,7 @@
 
+/**
+ * Object that contains the entire rental agreement for a given tool code and checkout date period.
+ */
 public class RentalAgreement {
     private String toolCode;
     private String toolType;
@@ -103,6 +106,9 @@ public class RentalAgreement {
                 "Final charge: " + finalCharge;
     }
 
+    /**
+     * Builder pattern implemented to facilitate building an otherwise complex object more reliably.
+     */
     public static class RentalAgreementBuilder{ //[IfICould] - While useful, build patterns add a lot of boilerplate. Project Lombok does this implicitly with @builder but requires too much setup for a demo.
         private String toolCode;
         private String toolType;

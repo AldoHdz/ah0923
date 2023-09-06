@@ -4,6 +4,9 @@ import org.apache.groovy.parser.antlr4.util.StringUtils;
 
 import java.math.BigDecimal;
 
+/**
+ * Object that functions as the single entity that ToolPrice and ToolType DAO map to.
+ */
 public class Tool {
     private String toolCode;
     private String toolType;

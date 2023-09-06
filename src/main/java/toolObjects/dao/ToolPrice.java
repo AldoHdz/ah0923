@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
+/**
+ * DAO that data from PriceData.json maps to.
+ */
 public class ToolPrice {
 
     private String toolType;

@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Repository that handles pulling data from PriceData.json and ToolData.json and merges it into a Tool object entity.
+ */
 public class JsonToolRepository implements ToolRepository {
     private ToolType[] toolTypeList;
     private ToolPrice[] toolPriceList;

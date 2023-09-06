@@ -16,6 +16,26 @@ class PointOfSaleTest {
     }
 
     @Test
+    @DisplayName("PointOfSale should throw invalid argument exception on invalid tool code")
+    void pointOfSaleThrowsErrorOnInvalidToolCode() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pointOfSale.checkout("NBA", "7/2/20", 100, 10);
+        });
+
+        String expectedMessage = "Invalid tool code. Verify ALL CAPS and has valid entry in repo. Tool code: NBA";
+        Assertions.assertTrue(expectedMessage.contains(exception.getMessage()));
+    }
+    @Test
+    @DisplayName("PointOfSale should throw invalid argument exception on invalid rental day counts")
+    void pointOfSaleThrowsCorrectErrorOnBadRentalDayCount(){
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pointOfSale.checkout("JAKR", "7/2/20", -1, 10);
+        });
+
+        String expectedMessage = "Number of days for the rental must be at least 1.";
+        Assertions.assertTrue(expectedMessage.contains(exception.getMessage()));
+    }
+    @Test
     @DisplayName("PointOfSale should throw invalid argument exception on invalid percent discount amount - Test 1")
     void pointOfSaleThrowsCorrectErrorOnBadPercentDiscount() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -126,29 +146,6 @@ class PointOfSaleTest {
         Assertions.assertEquals("0%", rentalAgreement.getDiscountPercent());
         Assertions.assertEquals("0.00", rentalAgreement.getDiscountAmount());
         Assertions.assertEquals("0.00", rentalAgreement.getFinalCharge());
-    }
-
-
-    @Test
-    @DisplayName("PointOfSale should throw invalid argument exception on invalid rental day counts")
-    void pointOfSaleThrowsCorrectErrorOnBadRentalDayCount(){
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pointOfSale.checkout("JAKR", "7/2/20", -1, 10);
-        });
-
-        String expectedMessage = "Number of days for the rental must be at least 1.";
-        Assertions.assertTrue(expectedMessage.contains(exception.getMessage()));
-    }
-
-    @Test
-    @DisplayName("PointOfSale should throw invalid argument exception on invalid tool code")
-    void pointOfSaleThrowsErrorOnInvalidToolCode() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pointOfSale.checkout("NBA", "7/2/20", 100, 10);
-        });
-
-        String expectedMessage = "Invalid tool code. Verify ALL CAPS and has valid entry in repo. Tool code: NBA";
-        Assertions.assertTrue(expectedMessage.contains(exception.getMessage()));
     }
 
     @Test

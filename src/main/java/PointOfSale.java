@@ -23,9 +23,9 @@ public class PointOfSale {
 
     /**
      * @param toolCode - String indicating a unique ID for every tool.
+     * @param checkoutDate - A string representing a checkout date. Will be formatted internally to a java date time object.
      * @param rentalDayCount - Simple int number of days a potential rental will last.
      * @param discountPercent - int number that represents a percentage discount represented as a whole number. IE 5 = 5%.
-     * @param checkoutDate - A string representing a checkout date. Will be formatted internally to a java date time object.
      * @return RentalAgreement - Represents an object that has all the data pertaining to a rental agreement.
      */
     public RentalAgreement checkout(String toolCode, String checkoutDate, int rentalDayCount, int discountPercent) {
